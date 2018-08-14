@@ -1,0 +1,1100 @@
+elasticsearch.yml
+# ======================== Elasticsearch Configuration =========================
+#
+# NOTE: Elasticsearch comes with reasonable defaults for most settings.
+#       Before you set out to tweak and tune the configuration, make sure you
+#       understand what are you trying to accomplish and the consequences.
+#
+# The primary way of configuring a node is via this file. This template lists
+# the most important settings you may want to configure for a production cluster.
+#
+# Please consult the documentation for further information on configuration options:
+# https://www.elastic.co/guide/en/elasticsearch/reference/index.html
+#
+# ---------------------------------- Cluster -----------------------------------
+#
+# Use a descriptive name for your cluster:
+#
+#cluster.name: my-application
+#
+# ------------------------------------ Node ------------------------------------
+#
+# Use a descriptive name for the node:
+#
+#node.name: node-1
+#
+# Add custom attributes to the node:
+#
+#node.attr.rack: r1
+#
+# ----------------------------------- Paths ------------------------------------
+#
+# Path to directory where to store the data (separate multiple locations by comma):
+#
+path.data: /var/lib/elasticsearch
+#
+# Path to log files:
+#
+path.logs: /var/log/elasticsearch
+#
+# ----------------------------------- Memory -----------------------------------
+#
+# Lock the memory on startup:
+#
+#bootstrap.memory_lock: true
+#
+ 45 # Make sure that the heap size is set to about half the memory available
+ 46 # on the system and that the owner of the process is allowed to use this
+ 47 # limit.
+ 48 #
+ 49 # Elasticsearch performs poorly when the system is swapping the memory.
+ 50 #
+ 51 # ---------------------------------- Network -----------------------------------
+ 52 #
+ 53 # Set the bind address to a specific IP (IPv4 or IPv6):
+ 54 #
+ 55 network.host: localhost
+ 56 #
+ 57 # Set a custom port for HTTP:
+ 58 #
+ 59 #http.port: 9200
+ 60 #
+ 61 # For more information, consult the network module documentation.
+ 62 #
+ 63 # --------------------------------- Discovery ----------------------------------
+ 64 #
+ 65 # Pass an initial list of hosts to perform discovery when new node is started:
+ 66 # The default list of hosts is ["127.0.0.1", "[::1]"]
+ 67 #
+ 68 #discovery.zen.ping.unicast.hosts: ["host1", "host2"]
+ 69 #
+ 70 # Prevent the "split brain" by configuring the majority of nodes (total number of master-eligible nodes / 2 + 1):
+ 71 #
+ 72 #discovery.zen.minimum_master_nodes:
+ 73 #
+ 74 # For more information, consult the zen discovery module documentation.
+ 75 #
+ 76 # ---------------------------------- Gateway -----------------------------------
+ 77 #
+ 78 # Block initial recovery after a full cluster restart until N nodes are started:
+ 79 #
+ 80 #gateway.recover_after_nodes: 3
+ 81 #
+ 82 # For more information, consult the gateway module documentation.
+ 83 #
+# ---------------------------------- Various -----------------------------------
+#
+# Require explicit names when deleting indices:
+#
+#action.destructive_requires_name: true
+_____________________________________________________
+______________________________________________
+logstash.yml
+
+# Settings file in YAML
+#
+# Settings can be specified either in hierarchical form, e.g.:
+#
+#   pipeline:
+#     batch:
+#       size: 125
+#       delay: 5
+#
+# Or as flat keys:
+#
+#   pipeline.batch.size: 125
+#   pipeline.batch.delay: 5
+#
+# ------------  Node identity ------------
+#
+# Use a descriptive name for the node:
+#
+# node.name: test
+#
+# If omitted the node name will default to the machine's host name
+#
+# ------------ Data path ------------------
+#
+# Which directory should be used by logstash and its plugins
+# for any persistent needs. Defaults to LOGSTASH_HOME/data
+#
+path.data: /var/lib/logstash
+#
+# ------------ Pipeline Settings --------------
+#
+# The ID of the pipeline.
+#
+# pipeline.id: main
+#
+# Set the number of workers that will, in parallel, execute the filters+outputs
+# stage of the pipeline.
+#
+# This defaults to the number of the host's CPU cores.
+#
+# pipeline.workers: 2
+#
+# How many events to retrieve from inputs before sending to filters+workers
+#
+# pipeline.batch.size: 125
+#
+# How long to wait in milliseconds while polling for the next event
+# before dispatching an undersized batch to filters+outputs
+#
+# pipeline.batch.delay: 50
+#
+# Force Logstash to exit during shutdown even if there are still inflight
+# events in memory. By default, logstash will refuse to quit until all
+# received events have been pushed to the outputs.
+#
+# WARNING: enabling this can lead to data loss during shutdown
+#
+# pipeline.unsafe_shutdown: false
+#
+# ------------ Pipeline Configuration Settings --------------
+#
+# Where to fetch the pipeline configuration for the main pipeline
+#
+# path.config:
+#
+# Pipeline configuration string for the main pipeline
+#
+# config.string:
+#
+# At startup, test if the configuration is valid and exit (dry run)
+#
+# config.test_and_exit: false
+#
+# Periodically check if the configuration has changed and reload the pipeline
+# This can also be triggered manually through the SIGHUP signal
+#
+# config.reload.automatic: false
+#
+# How often to check if the pipeline configuration has changed (in seconds)
+#
+# config.reload.interval: 3s
+#
+# Show fully compiled configuration as debug log message
+# NOTE: --log.level must be 'debug'
+#
+# config.debug: false
+#
+# When enabled, process escaped characters such as \n and \" in strings in the
+# pipeline configuration files.
+#
+# config.support_escapes: false
+#
+# ------------ Module Settings ---------------
+# Define modules here.  Modules definitions must be defined as an array.
+# The simple way to see this is to prepend each `name` with a `-`, and keep
+# all associated variables under the `name` they are associated with, and
+# above the next, like this:
+#
+# modules:
+#   - name: MODULE_NAME
+#     var.PLUGINTYPE1.PLUGINNAME1.KEY1: VALUE
+#     var.PLUGINTYPE1.PLUGINNAME1.KEY2: VALUE
+#     var.PLUGINTYPE2.PLUGINNAME1.KEY1: VALUE
+#     var.PLUGINTYPE3.PLUGINNAME3.KEY1: VALUE
+#
+# Module variable names must be in the format of
+#
+# var.PLUGIN_TYPE.PLUGIN_NAME.KEY
+#
+# modules:
+#
+# ------------ Cloud Settings ---------------
+# Define Elastic Cloud settings here.
+# Format of cloud.id is a base64 value e.g. dXMtZWFzdC0xLmF3cy5mb3VuZC5pbyRub3RhcmVhbCRpZGVudGlmaWVy
+# and it may have an label prefix e.g. staging:dXMtZ...
+# This will overwrite 'var.elasticsearch.hosts' and 'var.kibana.host'
+# cloud.id: <identifier>
+#
+# Format of cloud.auth is: <user>:<pass>
+# This is optional
+# If supplied this will overwrite 'var.elasticsearch.username' and 'var.elasticsearch.password'
+# If supplied this will overwrite 'var.kibana.username' and 'var.kibana.password'
+# cloud.auth: elastic:<password>
+#
+# ------------ Queuing Settings --------------
+#
+# Internal queuing model, "memory" for legacy in-memory based queuing and
+# "persisted" for disk-based acked queueing. Defaults is memory
+#
+#
+# queue.type: memory
+#
+# If using queue.type: persisted, the directory path where the data files will be stored.
+# Default is path.data/queue
+#
+path.queue: /usr/share/logstash/data/queue
+#
+# If using queue.type: persisted, the page data files size. The queue data consists of
+# append-only data files separated into pages. Default is 64mb
+#
+# queue.page_capacity: 64mb
+#
+# If using queue.type: persisted, the maximum number of unread events in the queue.
+# Default is 0 (unlimited)
+#
+# queue.max_events: 0
+#
+# If using queue.type: persisted, the total capacity of the queue in number of bytes.
+# If you would like more unacked events to be buffered in Logstash, you can increase the
+# capacity using this setting. Please make sure your disk drive has capacity greater than
+# the size specified here. If both max_bytes and max_events are specified, Logstash will pick
+# whichever criteria is reached first
+# Default is 1024mb or 1gb
+#
+# queue.max_bytes: 1024mb
+#
+# If using queue.type: persisted, the maximum number of acked events before forcing a checkpoint
+# Default is 1024, 0 for unlimited
+#
+# queue.checkpoint.acks: 1024
+#
+# If using queue.type: persisted, the maximum number of written events before forcing a checkpoint
+# Default is 1024, 0 for unlimited
+#
+# queue.checkpoint.writes: 1024
+#
+# If using queue.type: persisted, the interval in milliseconds when a checkpoint is forced on the head page
+# Default is 1000, 0 for no periodic checkpoint.
+#
+# queue.checkpoint.interval: 1000
+#
+# ------------ Dead-Letter Queue Settings --------------
+# Flag to turn on dead-letter queue.
+#
+# dead_letter_queue.enable: false
+
+# If using dead_letter_queue.enable: true, the maximum size of each dead letter queue. Entries
+# will be dropped if they would increase the size of the dead letter queue beyond this setting.
+# Default is 1024mb
+# dead_letter_queue.max_bytes: 1024mb
+
+# If using dead_letter_queue.enable: true, the directory path where the data files will be stored.
+# Default is path.data/dead_letter_queue
+#
+# path.dead_letter_queue:
+#
+# ------------ Metrics Settings --------------
+#
+# Bind address for the metrics REST endpoint
+#
+# http.host: "127.0.0.1"
+#
+# Bind port for the metrics REST endpoint, this option also accept a range
+# (9600-9700) and logstash will pick up the first available ports.
+#
+# http.port: 9600-9700
+#
+# ------------ Debugging Settings --------------
+#
+# Options for log.level:
+#   * fatal
+#   * error
+#   * warn
+#   * info (default)
+#   * debug
+#   * trace
+#
+# log.level: info
+path.logs: /var/log/logstash
+#
+# ------------ Other Settings --------------
+#
+# Where to find custom plugins
+# path.plugins: []
+__________________________
+________________________________
+filebeat.yml
+###################### Filebeat Configuration Example #########################
+
+# This file is an example configuration file highlighting only the most common
+# options. The filebeat.reference.yml file from the same directory contains all the
+# supported options with more comments. You can use it as a reference.
+#
+# You can find the full configuration reference here:
+# https://www.elastic.co/guide/en/beats/filebeat/index.html
+
+# For more available modules and options, please see the filebeat.reference.yml sample
+# configuration file.
+
+#=========================== Filebeat prospectors =============================
+
+filebeat.prospectors:
+
+# Each - is a prospector. Most options can be set at the prospector level, so
+# you can use different prospectors for various configurations.
+# Below are the prospector specific configurations.
+
+- type: log
+
+  # Change to true to enable this prospector configuration.
+  enabled: false
+
+  # Paths that should be crawled and fetched. Glob based paths.
+  paths:
+    - /var/log/*.log
+    - /var/log/syslog
+    #- c:\programdata\elasticsearch\logs\*
+
+  # Exclude lines. A list of regular expressions to match. It drops the lines that are
+  # matching any regular expression from the list.
+  #exclude_lines: ['^DBG']
+
+  # Include lines. A list of regular expressions to match. It exports the lines that are
+  # matching any regular expression from the list.
+  #include_lines: ['^ERR', '^WARN']
+
+  # Exclude files. A list of regular expressions to match. Filebeat drops the files that
+  # are matching any regular expression from the list. By default, no files are dropped.
+  #exclude_files: ['.gz$']
+
+  # Optional additional fields. These fields can be freely picked
+  # to add additional information to the crawled log files for filtering
+  #fields:
+  #  level: debug
+  #  review: 1
+
+  ### Multiline options
+
+  # Mutiline can be used for log messages spanning multiple lines. This is common
+  # for Java Stack Traces or C-Line Continuation
+
+  # The regexp Pattern that has to be matched. The example pattern matches all lines starting with [
+  #multiline.pattern: ^\[
+
+  # Defines if the pattern set under pattern should be negated or not. Default is false.
+  #multiline.negate: false
+
+  # Match can be set to "after" or "before". It is used to define if lines should be append to a pattern
+  # that was (not) matched before or after or as long as a pattern is not matched based on negate.
+  # Note: After is the equivalent to previous and before is the equivalent to to next in Logstash
+  #multiline.match: after
+
+
+#============================= Filebeat modules ===============================
+
+filebeat.config.modules:
+  # Glob pattern for configuration loading
+  path: ${path.config}/modules.d/*.yml
+
+  # Set to true to enable config reloading
+  reload.enabled: false
+
+  # Period on which files under path should be checked for changes
+  #reload.period: 10s
+
+#==================== Elasticsearch template setting ==========================
+
+setup.template.settings:
+  index.number_of_shards: 3
+  #index.codec: best_compression
+  #_source.enabled: false
+
+#================================ General =====================================
+
+# The name of the shipper that publishes the network data. It can be used to group
+# all the transactions sent by a single shipper in the web interface.
+#name:
+
+# The tags of the shipper are included in their own field with each
+# transaction published.
+#tags: ["service-X", "web-tier"]
+
+# Optional fields that you can specify to add additional information to the
+# output.
+#fields:
+#  env: staging
+
+
+#============================== Dashboards =====================================
+# These settings control loading the sample dashboards to the Kibana index. Loading
+# the dashboards is disabled by default and can be enabled either by setting the
+# options here, or by using the `-setup` CLI flag or the `setup` command.
+#setup.dashboards.enabled: false
+
+# The URL from where to download the dashboards archive. By default this URL
+# has a value which is computed based on the Beat name and version. For released
+# versions, this URL points to the dashboard archive on the artifacts.elastic.co
+# website.
+#setup.dashboards.url:
+
+#============================== Kibana =====================================
+
+# Starting with Beats version 6.0.0, the dashboards are loaded via the Kibana API.
+# This requires a Kibana endpoint configuration.
+setup.kibana:
+
+  # Kibana Host
+  # Scheme and port can be left out and will be set to the default (http and 5601)
+  # In case you specify and additional path, the scheme is required: http://localhost:5601/path
+  # IPv6 addresses should always be defined as: https://[2001:db8::1]:5601
+  #host: "localhost:5601"
+
+#============================= Elastic Cloud ==================================
+
+# These settings simplify using filebeat with the Elastic Cloud (https://cloud.elastic.co/).
+
+# The cloud.id setting overwrites the `output.elasticsearch.hosts` and
+# `setup.kibana.host` options.
+# You can find the `cloud.id` in the Elastic Cloud web UI.
+#cloud.id:
+
+# The cloud.auth setting overwrites the `output.elasticsearch.username` and
+# `output.elasticsearch.password` settings. The format is `<user>:<pass>`.
+#cloud.auth:
+
+#================================ Outputs =====================================
+
+# Configure what output to use when sending the data collected by the beat.
+
+#-------------------------- Elasticsearch output ------------------------------
+output.elasticsearch:
+  # Array of hosts to connect to.
+  hosts: ["localhost:9200"]
+
+  # Optional protocol and basic auth credentials.
+  #protocol: "https"
+  #username: "elastic"
+  #password: "changeme"
+
+#----------------------------- Logstash output --------------------------------
+#output.logstash:
+  # The Logstash hosts
+  #hosts: ["localhost:5044"]
+
+  # Optional SSL. By default is off.
+  # List of root certificates for HTTPS server verifications
+  #ssl.certificate_authorities: ["/etc/pki/root/ca.pem"]
+
+  # Certificate for SSL client authentication
+  #ssl.certificate: "/etc/pki/client/cert.pem"
+
+  # Client Certificate Key
+  #ssl.key: "/etc/pki/client/cert.key"
+
+#================================ Logging =====================================
+
+# Sets log level. The default log level is info.
+# Available log levels are: error, warning, info, debug
+#logging.level: debug
+
+# At debug level, you can selectively enable logging only for some components.
+# To enable all selectors use ["*"]. Examples of other selectors are "beat",
+# "publish", "service".
+#logging.selectors: ["*"]
+
+#============================== Xpack Monitoring ===============================
+# filebeat can export internal metrics to a central Elasticsearch monitoring
+# cluster.  This requires xpack monitoring to be enabled in Elasticsearch.  The
+# reporting is disabled by default.
+
+# Set to true to enable the monitoring reporter.
+#xpack.monitoring.enabled: false
+
+# Uncomment to send the metrics to Elasticsearch. Most settings from the
+# Elasticsearch output are accepted here as well. Any setting that is not set is
+# automatically inherited from the Elasticsearch output configuration, so if you
+# have the Elasticsearch output configured, you can simply uncomment the
+# following line.
+#xpack.monitoring.elasticsearch:
+____________________________________________________________________________________
+____________________________________________________________________________________
+kibana.yml
+
+# Kibana is served by a back end server. This setting specifies the port to use.
+#server.port: 5601
+
+# Specifies the address to which the Kibana server will bind. IP addresses and host names are both valid values.
+# The default is 'localhost', which usually means remote machines will not be able to connect.
+# To allow connections from remote users, set this parameter to a non-loopback address.
+server.host: "localhost"
+
+# Enables you to specify a path to mount Kibana at if you are running behind a proxy. This only affects
+# the URLs generated by Kibana, your proxy is expected to remove the basePath value before forwarding requests
+# to Kibana. This setting cannot end in a slash.
+#server.basePath: ""
+
+# The maximum payload size in bytes for incoming server requests.
+#server.maxPayloadBytes: 1048576
+
+# The Kibana server's name.  This is used for display purposes.
+#server.name: "your-hostname"
+
+# The URL of the Elasticsearch instance to use for all your queries.
+#elasticsearch.url: "http://localhost:9200"
+
+# When this setting's value is true Kibana uses the hostname specified in the server.host
+# setting. When the value of this setting is false, Kibana uses the hostname of the host
+# that connects to this Kibana instance.
+#elasticsearch.preserveHost: true
+
+# Kibana uses an index in Elasticsearch to store saved searches, visualizations and
+# dashboards. Kibana creates a new index if the index doesn't already exist.
+#kibana.index: ".kibana"
+
+# The default application to load.
+#kibana.defaultAppId: "home"
+
+# If your Elasticsearch is protected with basic authentication, these settings provide
+# the username and password that the Kibana server uses to perform maintenance on the Kibana
+# index at startup. Your Kibana users still need to authenticate with Elasticsearch, which
+# is proxied through the Kibana server.
+#elasticsearch.username: "user"
+#elasticsearch.password: "pass"
+
+# Enables SSL and paths to the PEM-format SSL certificate and SSL key files, respectively.
+# These settings enable SSL for outgoing requests from the Kibana server to the browser.
+#server.ssl.enabled: false
+#server.ssl.certificate: /path/to/your/server.crt
+#server.ssl.key: /path/to/your/server.key
+
+# Optional settings that provide the paths to the PEM-format SSL certificate and key files.
+# These files validate that your Elasticsearch backend uses the same key files.
+#elasticsearch.ssl.certificate: /path/to/your/client.crt
+#elasticsearch.ssl.key: /path/to/your/client.key
+
+# Optional setting that enables you to specify a path to the PEM file for the certificate
+# authority for your Elasticsearch instance.
+#elasticsearch.ssl.certificateAuthorities: [ "/path/to/your/CA.pem" ]
+
+# To disregard the validity of SSL certificates, change this setting's value to 'none'.
+#elasticsearch.ssl.verificationMode: full
+
+# Time in milliseconds to wait for Elasticsearch to respond to pings. Defaults to the value of
+# the elasticsearch.requestTimeout setting.
+#elasticsearch.pingTimeout: 1500
+
+# Time in milliseconds to wait for responses from the back end or Elasticsearch. This value
+# must be a positive integer.
+#elasticsearch.requestTimeout: 30000
+
+# List of Kibana client-side headers to send to Elasticsearch. To send *no* client-side
+# headers, set this value to [] (an empty list).
+#elasticsearch.requestHeadersWhitelist: [ authorization ]
+
+# Header names and values that are sent to Elasticsearch. Any custom headers cannot be overwritten
+# by client-side headers, regardless of the elasticsearch.requestHeadersWhitelist configuration.
+#elasticsearch.customHeaders: {}
+
+# Time in milliseconds for Elasticsearch to wait for responses from shards. Set to 0 to disable.
+#elasticsearch.shardTimeout: 0
+
+# Time in milliseconds to wait for Elasticsearch at Kibana startup before retrying.
+#elasticsearch.startupTimeout: 5000
+
+# Specifies the path where Kibana creates the process ID file.
+#pid.file: /var/run/kibana.pid
+
+# Enables you specify a file where Kibana stores log output.
+#logging.dest: stdout
+
+# Set the value of this setting to true to suppress all logging output.
+#logging.silent: false
+
+# Set the value of this setting to true to suppress all logging output other than error messages.
+#logging.quiet: false
+
+# Set the value of this setting to true to log all events, including system usage information
+# and all requests.
+#logging.verbose: false
+
+# Set the interval in milliseconds to sample system and process performance
+# metrics. Minimum is 100ms. Defaults to 5000.
+#ops.interval: 5000
+
+# The default locale. This locale can be used in certain circumstances to substitute any missing
+# translations.
+#i18n.defaultLocale: "en"
+                              
+__________________________________________________________________________________________________
+__________________________________________________________________________________________________
+/etc/default/elasticsearch
+
+################################
+# Elasticsearch
+################################
+
+# Elasticsearch home directory
+#ES_HOME=/usr/share/elasticsearch
+
+# Elasticsearch Java path
+JAVA_HOME=/usr/lib/jvm/java-8-oracle
+
+# Elasticsearch configuration directory
+ES_PATH_CONF=/etc/elasticsearch
+
+# Elasticsearch PID directory
+#PID_DIR=/var/run/elasticsearch
+
+# Additional Java OPTS
+#ES_JAVA_OPTS=
+
+# Configure restart on package upgrade (true, every other setting will lead to not restarting)
+#RESTART_ON_UPGRADE=true
+
+################################
+# Elasticsearch service
+################################
+
+# SysV init.d
+#
+# The number of seconds to wait before checking if Elasticsearch started successfully as a daemon process
+ES_STARTUP_SLEEP_TIME=5
+
+################################
+# System properties
+################################
+
+# Specifies the maximum file descriptor number that can be opened by this process
+# When using Systemd, this setting is ignored and the LimitNOFILE defined in
+# /usr/lib/systemd/system/elasticsearch.service takes precedence
+#MAX_OPEN_FILES=65536
+
+# The maximum number of bytes of memory that may be locked into RAM
+# Set to "unlimited" if you use the 'bootstrap.memory_lock: true' option
+# in elasticsearch.yml.
+# When using systemd, LimitMEMLOCK must be set in a unit file such as
+# /etc/systemd/system/elasticsearch.service.d/override.conf.
+#MAX_LOCKED_MEMORY=unlimited
+
+# Maximum number of VMA (Virtual Memory Areas) a process can own
+# When using Systemd, this setting is ignored and the 'vm.max_map_count'
+# property is set at boot time in /usr/lib/sysctl.d/elasticsearch.conf
+#MAX_MAP_COUNT=262144
+___________________________________________________
+___________________________________________________
+kibana
+
+user="kibana"
+group="kibana"
+chroot="/"
+chdir="/"
+nice=""
+
+
+# If this is set to 1, then when `stop` is called, if the process has
+# not exited within a reasonable time, SIGKILL will be sent next.
+# The default behavior is to simply log a message "program stop failed; still running"
+KILL_ON_STOP_TIMEOUT=0
+_______________________________________________
+_______________________________________________
+logstash
+
+JAVACMD="/usr/bin/java"
+LS_HOME="/usr/share/logstash"
+LS_SETTINGS_DIR="/etc/logstash"
+LS_PIDFILE="/var/run/logstash.pid"
+LS_USER="logstash"
+LS_GROUP="logstash"
+LS_GC_LOG_FILE="/var/log/logstash/gc.log"
+LS_OPEN_FILES="16384"
+LS_NICE="19"
+SERVICE_NAME="logstash"
+SERVICE_DESCRIPTION="logstash"
+____________________________________________________
+____________________________________________________
+/etc/logstash/jvm.options
+
+## JVM configuration
+
+# Xms represents the initial size of total heap space
+# Xmx represents the maximum size of total heap space
+
+-Xms256m
+-Xmx1g
+
+################################################################
+## Expert settings
+################################################################
+##
+## All settings below this section are considered
+## expert settings. Don't tamper with them unless
+## you understand what you are doing
+##
+################################################################
+
+## GC configuration
+-XX:+UseParNewGC
+-XX:+UseConcMarkSweepGC
+-XX:CMSInitiatingOccupancyFraction=75
+-XX:+UseCMSInitiatingOccupancyOnly
+
+## optimizations
+
+# disable calls to System#gc
+-XX:+DisableExplicitGC
+
+## locale
+# Set the locale language
+#-Duser.language=en
+
+# Set the locale country
+#-Duser.country=US
+
+# Set the locale variant, if any
+#-Duser.variant=
+
+## basic
+
+# set the I/O temp directory
+#-Djava.io.tmpdir=$HOME
+
+# set to headless, just in case
+-Djava.awt.headless=true
+
+# ensure UTF-8 encoding by default (e.g. filenames)
+-Dfile.encoding=UTF-8
+
+# use our provided JNA always versus the system one
+#-Djna.nosys=true
+
+## heap dumps
+
+# generate a heap dump when an allocation from the Java heap fails
+# heap dumps are created in the working directory of the JVM
+-XX:+HeapDumpOnOutOfMemoryError
+
+# specify an alternative path for heap dumps
+# ensure the directory exists and has sufficient space
+#-XX:HeapDumpPath=${LOGSTASH_HOME}/heapdump.hprof
+
+## GC logging
+#-XX:+PrintGCDetails
+#-XX:+PrintGCTimeStamps
+#-XX:+PrintGCDateStamps
+#-XX:+PrintClassHistogram
+#-XX:+PrintTenuringDistribution
+#-XX:+PrintGCApplicationStoppedTime
+
+# log GC status to a file with time stamps
+# ensure the directory exists
+#-Xloggc:${LS_GC_LOG_FILE}
+                                        
+___________________________________________________
+___________________________________________________
+log4j2.properties
+
+status = error
+name = LogstashPropertiesConfig
+
+appender.rolling.type = RollingFile
+appender.rolling.name = plain_rolling
+appender.rolling.fileName = ${sys:ls.logs}/logstash-${sys:ls.log.format}.log
+appender.rolling.filePattern = ${sys:ls.logs}/logstash-${sys:ls.log.format}-%d{yyyy-MM-dd}.log
+appender.rolling.policies.type = Policies
+appender.rolling.policies.time.type = TimeBasedTriggeringPolicy
+appender.rolling.policies.time.interval = 1
+appender.rolling.policies.time.modulate = true
+appender.rolling.layout.type = PatternLayout
+appender.rolling.layout.pattern = [%d{ISO8601}][%-5p][%-25c] %-.10000m%n
+
+appender.json_rolling.type = RollingFile
+appender.json_rolling.name = json_rolling
+appender.json_rolling.fileName = ${sys:ls.logs}/logstash-${sys:ls.log.format}.log
+appender.json_rolling.filePattern = ${sys:ls.logs}/logstash-${sys:ls.log.format}-%d{yyyy-MM-dd}.log
+appender.json_rolling.policies.type = Policies
+appender.json_rolling.policies.time.type = TimeBasedTriggeringPolicy
+appender.json_rolling.policies.time.interval = 1
+appender.json_rolling.policies.time.modulate = true
+appender.json_rolling.layout.type = JSONLayout
+appender.json_rolling.layout.compact = true
+appender.json_rolling.layout.eventEol = true
+
+rootLogger.level = ${sys:ls.log.level}
+rootLogger.appenderRef.rolling.ref = ${sys:ls.log.format}_rolling
+________________________________________________________________________
+________________________________________________________________________
+ pipelines.yml
+# This file is where you define your pipelines. You can define multiple.
+# For more information on multiple pipelines, see the documentation:
+#   https://www.elastic.co/guide/en/logstash/current/multiple-pipelines.html
+
+- pipeline.id: main
+  path.config: "/etc/logstash/conf.d/*.conf"
+
+startup.options
+JAVACMD=/usr/bin/java
+
+# Set a home directory
+LS_HOME=/usr/share/logstash
+
+# logstash settings directory, the path which contains logstash.yml
+LS_SETTINGS_DIR=/etc/logstash
+
+# Arguments to pass to logstash
+LS_OPTS="--path.settings ${LS_SETTINGS_DIR}"
+
+# Arguments to pass to java
+LS_JAVA_OPTS=""
+
+# pidfiles aren't used the same way for upstart and systemd; this is for sysv users.
+LS_PIDFILE=/var/run/logstash.pid
+
+# user and group id to be invoked as
+LS_USER=logstash
+LS_GROUP=logstash
+
+# Enable GC logging by uncommenting the appropriate lines in the GC logging
+# section in jvm.options
+LS_GC_LOG_FILE=/var/log/logstash/gc.log
+
+# Open file limit
+LS_OPEN_FILES=16384
+
+# Nice level
+LS_NICE=19
+
+# Change these to have the init script named and described differently
+# This is useful when running multiple instances of Logstash on the same
+# physical box or vm
+SERVICE_NAME="logstash"
+SERVICE_DESCRIPTION="logstash"
+
+# If you need to run a command or script before launching Logstash, put it
+# between the lines beginning with `read` and `EOM`, and uncomment those lines.
+###
+## read -r -d '' PRESTART << EOM
+## EOM
+
+02-beats-input.conf
+input {
+  beats {
+    port => 5044
+    ssl => true
+    ssl_certificate => "/etc/pki/tls/certs/logstash-forwarder.crt"
+    ssl_key => "/etc/pki/tls/private/logstash-forwarder.key"
+  }
+}
+
+
+10-syslog-filter.conf
+filter {
+  if [type] == "syslog" {
+    grok {
+      match => { "message" => "%{SYSLOGTIMESTAMP:syslog_timestamp} %{SYSLOGHOST:syslog_hostname} %{DATA:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{GREEDYDATA:syslog_message}" }
+      add_field => [ "received_at", "%{@timestamp}" ]
+      add_field => [ "received_from", "%{host}" ]
+    }
+    syslog_pri { }
+    date {
+      match => [ "syslog_timestamp", "MMM  d HH:mm:ss", "MMM dd HH:mm:ss" ]
+    }
+  }
+}
+
+
+30-elasticsearch-output.conf
+output {
+  elasticsearch {
+    hosts => ["localhost:9200"]
+    sniffing => true
+    manage_template => false
+    index => "%{[@metadata][beat]}-%{+YYYY.MM.dd}"
+    document_type => "%{[@metadata][type]}"
+  }
+}
+
+
+
+/etc/log4j2.properties
+
+status = error
+
+# log action execution errors for easier debugging
+logger.action.name = org.elasticsearch.action
+logger.action.level = debug
+
+appender.console.type = Console
+appender.console.name = console
+appender.console.layout.type = PatternLayout
+appender.console.layout.pattern = [%d{ISO8601}][%-5p][%-25c{1.}] %marker%m%n
+
+appender.rolling.type = RollingFile
+appender.rolling.name = rolling
+appender.rolling.fileName = ${sys:es.logs.base_path}${sys:file.separator}${sys:es.logs.cluster_name}.log
+appender.rolling.layout.type = PatternLayout
+appender.rolling.layout.pattern = [%d{ISO8601}][%-5p][%-25c{1.}] %marker%.-10000m%n
+appender.rolling.filePattern = ${sys:es.logs.base_path}${sys:file.separator}${sys:es.logs.cluster_name}-%d{yyyy-MM-dd}-%i.log.gz
+appender.rolling.policies.type = Policies
+appender.rolling.policies.time.type = TimeBasedTriggeringPolicy
+appender.rolling.policies.time.interval = 1
+appender.rolling.policies.time.modulate = true
+appender.rolling.policies.size.type = SizeBasedTriggeringPolicy
+appender.rolling.policies.size.size = 128MB
+appender.rolling.strategy.type = DefaultRolloverStrategy
+appender.rolling.strategy.fileIndex = nomax
+appender.rolling.strategy.action.type = Delete
+appender.rolling.strategy.action.basepath = ${sys:es.logs.base_path}
+appender.rolling.strategy.action.condition.type = IfFileName
+appender.rolling.strategy.action.condition.glob = ${sys:es.logs.cluster_name}-*
+appender.rolling.strategy.action.condition.nested_condition.type = IfAccumulatedFileSize
+appender.rolling.strategy.action.condition.nested_condition.exceeds = 2GB
+
+rootLogger.level = info
+rootLogger.appenderRef.console.ref = console
+rootLogger.appenderRef.rolling.ref = rolling
+
+appender.deprecation_rolling.type = RollingFile
+appender.deprecation_rolling.name = deprecation_rolling
+appender.deprecation_rolling.fileName = ${sys:es.logs.base_path}${sys:file.separator}${sys:es.logs.cluster_name}_deprecation.log
+appender.deprecation_rolling.layout.type = PatternLayout
+appender.deprecation_rolling.layout.pattern = [%d{ISO8601}][%-5p][%-25c{1.}] %marker%.-10000m%n
+appender.deprecation_rolling.filePattern = ${sys:es.logs.base_path}${sys:file.separator}${sys:es.logs.cluster_name}_deprecation-%i.log.gz
+appender.deprecation_rolling.policies.type = Policies
+appender.deprecation_rolling.policies.size.type = SizeBasedTriggeringPolicy
+appender.deprecation_rolling.policies.size.size = 1GB
+appender.deprecation_rolling.strategy.type = DefaultRolloverStrategy
+appender.deprecation_rolling.strategy.max = 4
+
+logger.deprecation.name = org.elasticsearch.deprecation
+logger.deprecation.level = warn
+logger.deprecation.appenderRef.deprecation_rolling.ref = deprecation_rolling
+logger.deprecation.additivity = false
+
+appender.index_search_slowlog_rolling.type = RollingFile
+appender.index_search_slowlog_rolling.name = index_search_slowlog_rolling
+appender.index_search_slowlog_rolling.fileName = ${sys:es.logs.base_path}${sys:file.separator}${sys:es.logs.cluster_name}_index_search_slowlog.log
+appender.index_search_slowlog_rolling.layout.type = PatternLayout
+appender.index_search_slowlog_rolling.layout.pattern = [%d{ISO8601}][%-5p][%-25c] %marker%.-10000m%n
+appender.index_search_slowlog_rolling.filePattern = ${sys:es.logs.base_path}${sys:file.separator}${sys:es.logs.cluster_name}_index_search_slowlog-%d{yyyy-MM-dd}.log
+appender.index_search_slowlog_rolling.policies.type = Policies
+appender.index_search_slowlog_rolling.policies.time.type = TimeBasedTriggeringPolicy
+appender.index_search_slowlog_rolling.policies.time.interval = 1
+appender.index_search_slowlog_rolling.policies.time.modulate = true
+
+logger.index_search_slowlog_rolling.name = index.search.slowlog
+logger.index_search_slowlog_rolling.level = trace
+logger.index_search_slowlog_rolling.appenderRef.index_search_slowlog_rolling.ref = index_search_slowlog_rolling
+logger.index_search_slowlog_rolling.additivity = false
+
+appender.index_indexing_slowlog_rolling.type = RollingFile
+appender.index_indexing_slowlog_rolling.name = index_indexing_slowlog_rolling
+appender.index_indexing_slowlog_rolling.fileName = ${sys:es.logs.base_path}${sys:file.separator}${sys:es.logs.cluster_name}_index_indexing_slowlog.log
+appender.index_indexing_slowlog_rolling.layout.type = PatternLayout
+appender.index_indexing_slowlog_rolling.layout.pattern = [%d{ISO8601}][%-5p][%-25c] %marker%.-10000m%n
+appender.index_indexing_slowlog_rolling.filePattern = ${sys:es.logs.base_path}${sys:file.separator}${sys:es.logs.cluster_name}_index_indexing_slowlog-%d{yyyy-MM-dd}.log
+appender.index_indexing_slowlog_rolling.policies.type = Policies
+appender.index_indexing_slowlog_rolling.policies.time.type = TimeBasedTriggeringPolicy
+appender.index_indexing_slowlog_rolling.policies.time.interval = 1
+appender.index_indexing_slowlog_rolling.policies.time.modulate = true
+
+logger.index_indexing_slowlog.name = index.indexing.slowlog.index
+logger.index_indexing_slowlog.level = trace
+logger.index_indexing_slowlog.appenderRef.index_indexing_slowlog_rolling.ref = index_indexing_slowlog_rolling
+logger.index_indexing_slowlog.additivity = false
+
+
+jvm.options
+
+## JVM configuration
+
+################################################################
+## IMPORTANT: JVM heap size
+################################################################
+##
+## You should always set the min and max JVM heap
+## size to the same value. For example, to set
+## the heap to 4 GB, set:
+##
+## -Xms4g
+## -Xmx4g
+##
+## See https://www.elastic.co/guide/en/elasticsearch/reference/current/heap-size.html
+## for more information
+##
+################################################################
+
+# Xms represents the initial size of total heap space
+# Xmx represents the maximum size of total heap space
+
+-Xms55m
+-Xmx55m
+
+################################################################
+## Expert settings
+################################################################
+##
+## All settings below this section are considered
+## expert settings. Don't tamper with them unless
+## you understand what you are doing
+##
+################################################################
+
+## GC configuration
+-XX:+UseConcMarkSweepGC
+-XX:CMSInitiatingOccupancyFraction=75
+-XX:+UseCMSInitiatingOccupancyOnly
+
+## optimizations
+
+# pre-touch memory pages used by the JVM during initialization
+-XX:+AlwaysPreTouch
+
+## basic
+
+# explicitly set the stack size
+-Xss1m
+
+# set to headless, just in case
+-Djava.awt.headless=true
+
+# ensure UTF-8 encoding by default (e.g. filenames)
+-Dfile.encoding=UTF-8
+
+# use our provided JNA always versus the system one
+-Djna.nosys=true
+
+# turn off a JDK optimization that throws away stack traces for common
+# exceptions because stack traces are important for debugging
+-XX:-OmitStackTraceInFastThrow
+
+# flags to configure Netty
+-Dio.netty.noUnsafe=true
+-Dio.netty.noKeySetOptimization=true
+-Dio.netty.recycler.maxCapacityPerThread=0
+
+# log4j 2
+-Dlog4j.shutdownHookEnabled=false
+-Dlog4j2.disable.jmx=true
+
+-Djava.io.tmpdir=${ES_TMPDIR}
+
+## heap dumps
+
+# generate a heap dump when an allocation from the Java heap fails
+# heap dumps are created in the working directory of the JVM
+-XX:+HeapDumpOnOutOfMemoryError
+
+# specify an alternative path for heap dumps
+# ensure the directory exists and has sufficient space
+-XX:HeapDumpPath=/var/lib/elasticsearch
+
+## JDK 8 GC logging
+
+8:-XX:+PrintGCDetails
+8:-XX:+PrintGCDateStamps
+8:-XX:+PrintTenuringDistribution
+8:-XX:+PrintGCApplicationStoppedTime
+8:-Xloggc:/var/log/elasticsearch/gc.log
+8:-XX:+UseGCLogFileRotation
+8:-XX:NumberOfGCLogFiles=32
+8:-XX:GCLogFileSize=64m
+
+# JDK 9+ GC logging
+9-:-Xlog:gc*,gc+age=trace,safepoint:file=/var/log/elasticsearch/gc.log:utctime,pid,tags:filecount=32,filesize=64m
+# due to internationalization enhancements in JDK 9 Elasticsearch need to set the provider to COMPAT otherwise
+# time/date parsing will break in an incompatible way for some date patterns and locals
+9-:-Djava.locale.providers=COMPAT
+
+
+
+
+
+
+
+
+
+

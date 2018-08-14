@@ -1,3 +1,5 @@
 https://www.digitalocean.com/community/tutorials/how-to-install-elasticsearch-logstash-and-kibana-elk-stack-on-ubuntu-14-04#prerequisites
 https://linoxide.com/ubuntu-how-to/setup-elk-stack-ubuntu-16/
 https://hostpresto.com/community/tutorials/install-and-configure-elk-stack-on-ubuntu-14-04/
+https://www.elastic.co/guide/en/logstash/current/config-examples.html
+https://www.elastic.co/guide/en/logstash/current/configuration.html
